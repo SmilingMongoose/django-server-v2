@@ -1,0 +1,23 @@
+Tickers in the database:<br>
+{% for ticker in tickers %}
+    {{ ticker }}; average open price: {{ ticker.average_open|floatformat:2 }}, average close price: {{ ticker.average_close|floatformat:2 }}, min open price: {{ ticker.min_open|floatformat:2 }}, max close price: {{ ticker.max_close|floatformat:2 }} <br>
+{% endfor %}<br>
+
+Enter the ticker to view data:
+<form accept="{% url 'view_data' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="ticker_input">
+    <button type="submit">Submit</button>
+</form>
+
+API data:<br>
+{{ entered_ticker }}<br>
+Average open price: {{ average_open_dsp|floatformat:2 }}<br>
+Average close price: {{ average_close_dsp|floatformat:2 }}<br>
+Min open price: {{ min_open_dsp|floatformat:2 }}<br>
+Max close price: {{ max_close_dsp|floatformat:2 }}<br><br>
+
+
+{% for entry_open in data_open_close %}
+    date: {{ entry_open.0 }} - open: {{ entry_open.1 }} - close: {{ entry_open.2 }}  <br>
+{% endfor %}
